@@ -11,7 +11,7 @@ const InfoNavbar = () => {
                     <div className="border-r pr-7 flex items-center gap-3"><IoMailOutline></IoMailOutline> jijetu2@gmail.com</div>
                     <div className="px-3 flex items-center gap-3"><FaPhoneVolume></FaPhoneVolume>
                         +880 1626140989</div>
-                    <div className="border-l pl-7 flex gap-3">
+                    <div className="border-l pl-7 flex gap-4 text-lg">
                         <FaFacebookF></FaFacebookF>
                         <FaInstagram ></FaInstagram>
                         <FaYoutube></FaYoutube>
