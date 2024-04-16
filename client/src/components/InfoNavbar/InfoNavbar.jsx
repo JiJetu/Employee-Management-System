@@ -4,7 +4,7 @@ import { FaFacebookF, FaInstagram } from "react-icons/fa";
 
 const InfoNavbar = () => {
     return (
-        <div className="border-b py-2">
+        <div className="border-b border-gray-400 text-white py-2 w-full">
             <div className="flex max-w-[1000px] mx-auto">
                 <div className="flex-1"></div>
                 <div className="flex justify-between flex-1 text-base">

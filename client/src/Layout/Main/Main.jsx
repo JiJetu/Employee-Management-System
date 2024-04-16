@@ -6,8 +6,11 @@ import Footer from "../../components/Share/Footer/Footer";
 const Main = () => {
     return (
         <div>
-            <InfoNavbar></InfoNavbar>
-            <Navbar></Navbar>
+            <div className="absolute w-full z-10">
+                <InfoNavbar></InfoNavbar>
+                <div className="sticky top-0 z-20"><Navbar></Navbar></div>
+                
+            </div>
             <Outlet></Outlet>
             <Footer></Footer>
         </div>
