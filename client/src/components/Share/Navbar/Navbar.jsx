@@ -1,10 +1,18 @@
 import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
+    const activeLinkStyle = {
+        color: 'red',
+        fontWeight: 'bold',
+        border: ''
+      };
+
     const navbar = <>
-        <li><NavLink to='/'>Home</NavLink></li>
-        <li><NavLink to='/contact'>Contact Us</NavLink></li>
-        <li><NavLink to='/dashboard'>Dashboard</NavLink></li>
+        <li><NavLink to='/' className={({ isActive, isPending }) => isActive ? "px-5 py-2 border-b-2 border-red-700 rounded-xl" : isPending ? "pending" : "" }>Home</NavLink></li>
+
+        <li><NavLink to='/contact' className={({ isActive, isPending }) => isActive ? "px-5 py-2 border-b-2 border-red-700 rounded-xl" : isPending ? "pending" : "" }>Contact Us</NavLink></li>
+
+        <li><NavLink to='/dashboard' className={({ isActive, isPending }) => isActive ? "px-5 py-2 border-b-2 border-red-700 rounded-xl" : isPending ? "pending" : "" }>Dashboard</NavLink></li>
     </>
     return (
         <div className="w-full text-white">
@@ -26,7 +34,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">LogIn</a>
+                    <a className="px-5 py-2 border-2 border-red-700 rounded-xl hover:bg-red-700">LogIn</a>
                 </div>
             </div>
         </div>
