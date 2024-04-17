@@ -34,7 +34,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="px-5 py-2 border-2 border-red-700 rounded-xl hover:bg-red-700">LogIn</a>
+                    <Link to="/login" className="px-5 py-2 border-2 border-red-700 rounded-xl hover:bg-red-700">LogIn</Link>
                 </div>
             </div>
         </div>

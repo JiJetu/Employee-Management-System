@@ -1,18 +1,25 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import InfoNavbar from "../../components/InfoNavbar/InfoNavbar";
 import Navbar from "../../components/Share/Navbar/Navbar";
 import Footer from "../../components/Share/Footer/Footer";
 
 const Main = () => {
+    const location = useLocation();
+
+    const noHeaderFooter  = location.pathname.includes('login') || location.pathname.includes('signUp')
+    
     return (
         <div>
-            <div className="absolute w-full z-10">
-                <InfoNavbar></InfoNavbar>
-                <div className="sticky top-0 z-20"><Navbar></Navbar></div>
-                
-            </div>
+            {
+                noHeaderFooter || <div className="absolute w-full z-10">
+                    <InfoNavbar></InfoNavbar>
+                    <Navbar></Navbar>
+                </div>
+            }
             <Outlet></Outlet>
-            <Footer></Footer>
+            {
+                noHeaderFooter || <Footer></Footer>
+            }   
         </div>
     );
 };
