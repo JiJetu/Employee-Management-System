@@ -2,11 +2,16 @@ import { useContext, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../provider-context/AuthProvider/AuthProvider';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const LogIn = () => {
     const [disable, setDisable] = useState(true);
-    const {logIn} = useContext(AuthContext)
+    const { logIn, googleLogIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || "/";
 
     useEffect(() => {
         loadCaptchaEnginge(6);
@@ -19,10 +24,19 @@ const LogIn = () => {
         const password = form.password.value;
 
         logIn(email, password)
-        .then(result => {
-            const user = result.user;
-            console.log(user);
-        })
+            .then(result => {
+                const user = result.user;
+
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: `${user.displayName} login successfully`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+                navigate(from, { replace: true });
+            })
     }
 
     const handleCaptcha = e => {
@@ -35,6 +49,23 @@ const LogIn = () => {
         else {
             setDisable(true)
         }
+    }
+
+    const handleGoogleLogIn = () => {
+        googleLogIn()
+        .then(result => {
+            const user = result.user;
+
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: `${user.displayName} login successfully`,
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            navigate(from, {replace: true})
+        })
     }
 
     return (
@@ -82,6 +113,7 @@ const LogIn = () => {
                             </div>
                         </form>
                         <p className='text-center mb-3'>New here? <span className='text-blue-700 font-semibold'><Link to='/signUp'>create an account</Link></span></p>
+                        <button onClick={handleGoogleLogIn} className="btn btn-primary">Google</button>
                     </div>
                 </div>
             </div>

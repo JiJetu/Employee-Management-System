@@ -1,19 +1,42 @@
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../../provider-context/AuthProvider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
-    const activeLinkStyle = {
-        color: 'red',
-        fontWeight: 'bold',
-        border: ''
-      };
+    const { user, logout } = useContext(AuthContext);
 
     const navbar = <>
-        <li><NavLink to='/' className={({ isActive, isPending }) => isActive ? "px-5 py-2 border-b-2 border-red-700 rounded-xl" : isPending ? "pending" : "" }>Home</NavLink></li>
+        <li><NavLink to='/' className={({ isActive, isPending }) => isActive ? "px-5 py-2 border-b-2 border-red-700 rounded-xl" : isPending ? "pending" : ""}>Home</NavLink></li>
 
-        <li><NavLink to='/contact' className={({ isActive, isPending }) => isActive ? "px-5 py-2 border-b-2 border-red-700 rounded-xl" : isPending ? "pending" : "" }>Contact Us</NavLink></li>
+        <li><NavLink to='/contact' className={({ isActive, isPending }) => isActive ? "px-5 py-2 border-b-2 border-red-700 rounded-xl" : isPending ? "pending" : ""}>Contact Us</NavLink></li>
 
-        <li><NavLink to='/dashboard' className={({ isActive, isPending }) => isActive ? "px-5 py-2 border-b-2 border-red-700 rounded-xl" : isPending ? "pending" : "" }>Dashboard</NavLink></li>
+        <li><NavLink className={({ isActive, isPending }) => isActive ? "px-5 py-2 border-b-2 border-red-700 rounded-xl" : isPending ? "pending" : ""}>Dashboard</NavLink></li>
     </>
+
+    const handleLogout = () => {
+        Swal.fire({
+            title: "Are you sure? You want to LogOut!!",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, LogOut"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                logout()
+                    .then(() => {
+                        Swal.fire({
+                            title: "Logout successful",
+                            icon: "success"
+                        });
+                    })
+                    .catch(error => console.log(error))
+            }
+        });
+    }
+
     return (
         <div className="w-full text-white">
             <div className="navbar max-w-[1000px] mx-auto">
@@ -34,7 +57,14 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <Link to="/login" className="px-5 py-2 border-2 border-red-700 rounded-xl hover:bg-red-700">LogIn</Link>
+                    {
+                        user ? <>
+                            <button onClick={handleLogout} className="px-5 py-2 border-2 border-red-700 rounded-xl hover:bg-red-700">LogOut</button>
+                        </> :
+                            <>
+                                <Link to="/login" className="px-5 py-2 border-2 border-red-700 rounded-xl hover:bg-red-700">LogIn</Link>
+                            </>
+                    }
                 </div>
             </div>
         </div>
